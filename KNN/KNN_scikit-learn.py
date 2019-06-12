@@ -1,3 +1,5 @@
+# source: https://machinelearningcoban.com/2017/01/08/knn/
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import neighbors, datasets
