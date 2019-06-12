@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 
 from scipy.spatial.distance import cdist
 
-np.random.seed(11)
 
 means = [[2, 2], [8, 3], [3, 6]]
 cov = [[1, 0], [0, 1]]
@@ -38,7 +37,6 @@ def kmeans_display(X, label):
 
 # kmeans_display(X, original_label)
 
-print(X)
 
 # Khởi tạo cáo center ban đầu
 def kmeans_init_centers(X, k):
@@ -48,10 +46,11 @@ def kmeans_init_centers(X, k):
 
 # Gán nhãn mới cho các điểm khi biết các center
 def kmeans_assign_labels(X, centers):
-    #calculate pairwise distances btw data and centers
+    # calculate pairwise distances btw data and centers
     D = cdist(X, centers)
-    #return index of the closet center
-    return  np.argmin(D, axis=1)
+    # return index of the closet center
+    return np.argmin(D, axis=1)
+
 
 # Cập nhật các centers mới dựa trên dữ liệu vừa gán nhãn
 def kmeans_update_centers(X, labels, K):
@@ -60,11 +59,38 @@ def kmeans_update_centers(X, labels, K):
         # collect all points assigned to the k-th cluster
         Xk = X[labels == k, :]
         # take average
-        centers[k,:] = np.mean(Xk, axis = 0)
+        centers[k, :] = np.mean(Xk, axis=0)
     return centers
+
 
 # Kiểm tra điều kiện dừng của thuật toán
 def has_converged(centers, new_centers):
     # return True if two sets of centers are the same
     return (set([tuple(a) for a in centers]) ==
-        set([tuple(a) for a in new_centers]))
+            set([tuple(a) for a in new_centers]))
+
+
+def k_means(X, K):
+    centers = [kmeans_init_centers(X, K)]
+    labels = []
+    it = 0
+    while True:
+        labels.append(kmeans_assign_labels(X, centers[-1]))
+        new_centers = kmeans_update_centers(X, labels[-1], K)
+        if has_converged(centers[-1], new_centers):
+            break
+        centers.append(new_centers)
+        it += 1
+    return centers, labels, it
+
+
+centers, labels, it = k_means(X, K)
+
+print('Centers for testing (means):')
+print(means)
+
+print('Centers found by our algorithm:')
+print(centers[-1])
+
+kmeans_display(X, labels[-1])
+
