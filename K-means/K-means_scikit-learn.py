@@ -2,6 +2,7 @@ from sklearn.cluster import KMeans
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def kmeans_display(X, label):
     K = np.amax(label) + 1
     X0 = X[label == 0, :]
@@ -17,7 +18,6 @@ def kmeans_display(X, label):
     plt.show()
 
 
-
 means = [[2, 2], [8, 3], [3, 6]]
 cov = [[1, 0], [0, 1]]
 N = 500
@@ -31,8 +31,6 @@ kmeans = KMeans(n_clusters=3, random_state=0).fit(X)
 
 print('Centers for testing (means):')
 print(means)
-
-
 
 print('Centers found by scikit-learn:')
 print(kmeans.cluster_centers_);
