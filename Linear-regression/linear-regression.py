@@ -3,13 +3,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 data = pd.read_csv('data/Advertising.csv')
 
+
 #mấu số liệu
 X = data.values[:, 2]
 Y = data.values[:, 4]
 
-
-
-# plt.scatter(x, y, marker='o')
+#
+plt.scatter(X, Y, marker='o')
 # plt.show();
 # exit(0)
 
@@ -46,16 +46,16 @@ def train(X, Y, weight, bias, learning_rate, iter):
     return weight, bias, cost_history
 
 
-weight, bias, cost = train(X, Y, 0.03, 0.0014, 0.001, 60)
+weight, bias, cost = train(X, Y, 4, 0.4, 0.0001, 100)
+x_hypothesis = np.linspace(0, 50, 100)
+y_hypothesis = weight * x_hypothesis +bias
 
+plt.plot(x_hypothesis, y_hypothesis, '-r' )
 print("Ket qua: ")
 print(weight, bias)
 
 
-print("Gia tri du doan:")
+print("Gia tri du doan cho X = 19 :")
 
 print(predict(19, weight, bias))
-so_lan_lap = [i for i in range(60)]
-
-plt.plot(so_lan_lap, cost)
 plt.show()
