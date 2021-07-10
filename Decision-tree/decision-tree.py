@@ -3,6 +3,7 @@
 import numpy as np
 import pandas as pd
 
+
 class TreeNode(object):
     def __init__(self, ids=None, children=[], entropy=0, depth=0):
         self.ids = ids
@@ -26,7 +27,6 @@ def entropy(frequency):
     freq_0 = frequency[np.array(frequency).nonzero()[0]]
     prob_0 = freq_0 / float(freq_0.sum())
     return -np.sum(prob_0 * np.log(prob_0))
-
 
 
 class DecisionTreeID3(object):
@@ -120,14 +120,10 @@ class DecisionTreeID3(object):
         return labels
 
 
-
-
-
-
 if __name__ == "__main__":
     df = pd.DataFrame.from_csv('data/weather.csv')
     X = df.iloc[:, :-1]
     y = df.iloc[:, -1]
-    tree = DecisionTreeID3(max_depth = 3, min_samples_split = 2)
+    tree = DecisionTreeID3(max_depth=3, min_samples_split=2)
     tree.fit(X, y)
     print(tree.predict(X))
